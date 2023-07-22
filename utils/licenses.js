@@ -1,8 +1,10 @@
+import { mapNames } from "./common.js";
+
 /**
  * List of popular open source and open data licenses with badge data
  * Source: https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
  */
-export const licenses = [
+const licenses = [
   {
     name: "MIT",
     badge: "https://img.shields.io/badge/License-MIT-yellow.svg",
@@ -146,13 +148,47 @@ export const licenses = [
   },
 ];
 
+/**
+ * Gets the names of all license groups and flat licenses
+ * @param {string} licenseName Name of the license
+ * @returns {Array<string>} Array of license names
+ */
+export const getLicenseNames = () => mapNames(licenses);
+
+/**
+ * Gets the names of all sublicences in a license group
+ * @param {string} licenseName Name of the license group
+ * @returns {Array<string>} Array of sublicense names
+ */
+export const getSublicenseNames = (licenseName) =>
+  mapNames(getLicenseByName(licenseName).sublicenses);
+
+/**
+ * Gets license data by name
+ * @param {string} licenseName Name of the license
+ * @returns {(Object | undefined)} License data object if it exists
+ */
 export const getLicenseByName = (licenseName) =>
   licenses.find((l) => l.name === licenseName);
 
+/**
+ *  Gets sublicense data by name
+ * @param {string} licenseName Name of the license
+ * @param {string} sublicenseName Name of the sublicense
+ * @returns {(Object | undefined)} Sublicense data object if it exists
+ */
 export const getSublicenseByName = (licenseName, sublicenseName) =>
   licenses
     .find((l) => l.name === licenseName)
     .sublicenses.find((s) => s.name === sublicenseName);
 
-export const createLicenseBadge = ({ badge, link, slug }) =>
+/**
+ * Creates a markdown license badge
+ * @param {Object} license License data object
+ * @param {string} license.slug License name to be displayed on the image
+ * @param {string} license.badge Link to the license badge image
+ * @param {string} license.link Link to the license
+ * @returns {string} Markdown license badge
+ */
+export const createLicenseBadge = ({ slug, badge, link }) =>
   `[![License${slug ? ": " + slug : ""}](${badge})](${link})`;
