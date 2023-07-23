@@ -15,3 +15,13 @@ export const loadJSON = (path) =>
  * @returns {Array<string>} Array of name strings
  */
 export const mapNames = (arr) => arr.map((i) => i.name);
+
+/**
+ * Writes data to a file
+ * @param {string} fileName Name of the file
+ * @param {string} data Data to be written
+ */
+export const writeToFile = (fileName, data) =>
+  fs.writeFile(fileName, data, (err) => {
+    if (err) console.error(err);
+  });

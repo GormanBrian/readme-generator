@@ -1,7 +1,7 @@
 {
   "name": "readme-generator",
   "version": "1.0.0",
-  "url": "https://github.com/GormanBrian/readme-generator",
+  "url": "https://github.cm/GormanBrian/readme-generator",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "email-validator": "^2.0.4",
     "inquirer": "^6.3.1"
   }
 }

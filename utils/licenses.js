@@ -172,23 +172,23 @@ export const getLicenseByName = (licenseName) =>
   licenses.find((l) => l.name === licenseName);
 
 /**
- *  Gets sublicense data by name
+ * Gets sublicense data by name
  * @param {string} licenseName Name of the license
  * @param {string} sublicenseName Name of the sublicense
  * @returns {(Object | undefined)} Sublicense data object if it exists
  */
-export const getSublicenseByName = (licenseName, sublicenseName) =>
+const getSublicenseByName = (licenseName, sublicenseName) =>
   licenses
     .find((l) => l.name === licenseName)
     .sublicenses.find((s) => s.name === sublicenseName);
 
 /**
- * Creates a markdown license badge
- * @param {Object} license License data object
- * @param {string} license.slug License name to be displayed on the image
- * @param {string} license.badge Link to the license badge image
- * @param {string} license.link Link to the license
- * @returns {string} Markdown license badge
+ * Gets the sublicense or license data
+ * @param {string} licenseName Name of the license
+ * @param {string} sublicenseName Name of the sublicense
+ * @returns {Object} License data object
  */
-export const createLicenseBadge = ({ slug, badge, link }) =>
-  `[![License${slug ? ": " + slug : ""}](${badge})](${link})`;
+export const getLicenseData = (licenseName, sublicenseName) =>
+  sublicenseName
+    ? getSublicenseByName(licenseName, sublicenseName)
+    : getLicenseByName(licenseName);

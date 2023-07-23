@@ -1,22 +1,39 @@
 import path from "path";
+import * as EmailValidator from "email-validator";
 import { loadJSON } from "./common.js";
 import {
   getLicenseByName,
   getLicenseNames,
   getSublicenseNames,
-} from "./utils/licenses.js";
+} from "./licenses.js";
 
-const nodePackage = loadJSON("./package.json");
+// Load package.json to populate default answers
+const packageJSON = loadJSON("../package.json");
+
+/**
+ * Checks if the URL property in package.json is a GitHub URL and extracts the profile URL
+ * @returns {(string | undefined)} Valid GitHub profile URL or undefined
+ */
+const validateGithubProfile = (link) => {
+  let url = link.toLowerCase();
+  if (url.includes("github.com")) {
+    if (url.slice(-1) === "/") url = url.slice(0, -1);
+    return url.slice(0, url.lastIndexOf("/"));
+  } else return false;
+};
 
 /**
  * 1. Title
  * 2. Description
- * 3. Table of Contents
- * 4. Installation
- * 5. Usage License
- * 6. Contributing
- * 7. Tests
- * 8. Questions
+ * 3. Installation
+ * 4. Usage License
+ * 5. Usage Sublicense
+ * 6. Can Contribute
+ * 7. Contributing
+ * 8. Tests
+ * 9. GitHub
+ * 10. Email
+ * 11. Questions
  */
 const questions = [
   {
@@ -24,8 +41,8 @@ const questions = [
     name: "title",
     message: "Enter the title of the project",
     default:
-      nodePackage.name !== ""
-        ? nodePackage.name
+      packageJSON.name !== ""
+        ? packageJSON.name
         : path.basename(path.resolve()),
   },
   {
@@ -59,7 +76,7 @@ const questions = [
   },
   {
     type: "input",
-    name: "contribute",
+    name: "contribution",
     message: "Enter the contribution instructions:",
     when: ({ canContribute }) => canContribute,
   },
@@ -67,25 +84,33 @@ const questions = [
     type: "input",
     name: "tests",
     message: "Enter the testing instructions:",
-    default: nodePackage.scripts.test,
+    default: packageJSON.scripts.test,
   },
   {
     type: "input",
     name: "github",
     message: "Enter your GitHub username:",
-    default: () => {
-      let url = nodePackage.url.toLowerCase();
-      if (url.includes("github.com")) {
-        if (url.slice(-1) === "/") url = url.slice(0, -1);
-        return url.slice(0, url.lastIndexOf("/"));
-      } else return undefined;
-    },
+    default: () =>
+      validateGithubProfile(packageJSON.url) ? packageJSON.url : undefined,
   },
   {
     type: "input",
     name: "email",
     message: "Enter your email address:",
-    default: nodePackage.email,
+    default: () =>
+      EmailValidator.validate(packageJSON.email)
+        ? packageJSON.email
+        : undefined,
+    validate: (email) =>
+      EmailValidator.validate(email)
+        ? true
+        : "Please enter a valid email address",
+  },
+  {
+    type: "input",
+    name: "contact",
+    message: "Enter instructions for contacting you:",
+    default: "Email me with questions or create a pull request.",
   },
 ];
 
