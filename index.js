@@ -4,11 +4,10 @@ import { writeToFile } from "./utils/common.js";
 import generateMarkdown from "./utils/generateMarkdown.js";
 
 /**
- * Initialize the application
+ * Run the application
  */
-const init = () =>
-  inquirer
-    .prompt(questions)
-    .then((answers) => writeToFile("README.md", generateMarkdown(answers)));
-
-init();
+inquirer
+  .prompt(questions)
+  .then((answers) =>
+    writeToFile("output/README.md", generateMarkdown(answers))
+  );

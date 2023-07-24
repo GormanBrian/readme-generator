@@ -1,23 +1,21 @@
 # readme-generator
 
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
 ## Description
 
-Description
+test
 
 ## Table of Contents
 
 - [Installation](#installation)
-- [License](#license)
 - [Tests](#tests)
 - [Questions](#questions)
+- [License](#license)
 
 ## Installation
 
-npm init
-
-## License
-
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+npm i
 
 ## Tests
 
@@ -27,5 +25,9 @@ echo "Error: no test specified" && exit 1
 
 Email me with questions or create a pull request.
 
-- [GitHub](gormanbrian)
+- [GitHub](https://github.com/gormanbrian)
 - [test@test.com](mailto:test@test.com)
+
+## License
+
+[BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)

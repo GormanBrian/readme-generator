@@ -25,3 +25,16 @@ export const writeToFile = (fileName, data) =>
   fs.writeFile(fileName, data, (err) => {
     if (err) console.error(err);
   });
+
+/**
+ * Inserts an item into an array at a given index
+ * @param {Array<any>} arr Original array
+ * @param {number} index Index to insert item
+ * @param {any} newItem Item to be inserted
+ * @returns {Array<any>} Original array with new item inserted
+ */
+export const insert = (arr, index, newItem) => [
+  ...arr.slice(0, index),
+  newItem,
+  ...arr.slice(index),
+];

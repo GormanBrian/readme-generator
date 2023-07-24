@@ -11,29 +11,31 @@ import {
 const packageJSON = loadJSON("../package.json");
 
 /**
- * Checks if the URL property in package.json is a GitHub URL and extracts the profile URL
- * @returns {(string | undefined)} Valid GitHub profile URL or undefined
+ * Checks if the URL property in package.json is a GitHub URL and extracts the username
+ * @returns {(string | undefined)} Valid GitHub username or undefined
  */
 const validateGithubProfile = (link) => {
   let url = link.toLowerCase();
   if (url.includes("github.com")) {
     if (url.slice(-1) === "/") url = url.slice(0, -1);
-    return url.slice(0, url.lastIndexOf("/"));
-  } else return false;
+    url = url.slice(0, url.lastIndexOf("/"));
+    return url.slice(url.lastIndexOf("/") + 1);
+  } else return undefined;
 };
 
 /**
  * 1. Title
  * 2. Description
  * 3. Installation
- * 4. Usage License
- * 5. Usage Sublicense
- * 6. Can Contribute
- * 7. Contributing
- * 8. Tests
- * 9. GitHub
- * 10. Email
- * 11. Questions
+ * 4. Usage
+ * 5. License
+ * 6. Sublicense
+ * 7. Can Contribute
+ * 8. Contributing
+ * 9. Tests
+ * 10. GitHub
+ * 11. Email
+ * 12. Questions
  */
 const questions = [
   {
@@ -54,7 +56,12 @@ const questions = [
     type: "input",
     name: "installation",
     message: "Enter the installation instructions:",
-    default: "npm init",
+    default: "npm i",
+  },
+  {
+    type: "input",
+    name: "usage",
+    message: "Enter the usage instructions:",
   },
   {
     type: "list",
@@ -64,7 +71,7 @@ const questions = [
   },
   {
     type: "list",
-    name: "specificLicense",
+    name: "sublicense",
     message: "Select the specific license:",
     when: ({ license }) => "sublicenses" in getLicenseByName(license),
     choices: ({ license }) => getSublicenseNames(license),
@@ -90,8 +97,7 @@ const questions = [
     type: "input",
     name: "github",
     message: "Enter your GitHub username:",
-    default: () =>
-      validateGithubProfile(packageJSON.url) ? packageJSON.url : undefined,
+    default: () => validateGithubProfile(packageJSON.url),
   },
   {
     type: "input",

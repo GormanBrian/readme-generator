@@ -6,6 +6,9 @@ import { mapNames } from "./common.js";
  */
 const licenses = [
   {
+    name: "none",
+  },
+  {
     name: "MIT",
     badge: "https://img.shields.io/badge/License-MIT-yellow.svg",
     link: "https://opensource.org/licenses/MIT",
