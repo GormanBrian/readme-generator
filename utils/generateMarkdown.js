@@ -109,9 +109,7 @@ const generateTableOfContents = (titles) =>
  * @returns Markdown section title and content
  */
 const generateSection = ({ title, content }) =>
-  !content
-    ? null
-    : !title
+  !title
     ? `${content}\n`
     : `## ${title}
 
@@ -183,33 +181,30 @@ const generateMarkdown = ({
   contact,
 }) =>
   reduceContent(
-    insert(
-      insertTableOfContents(
-        [
-          {
-            title: "Description",
-            content: validate(description, () =>
-              generateList(motivation, reason, problem, lesson)
-            ),
-          },
-          { title: "Installation", content: installation },
-          { title: "Contribution", content: contribution },
-          { title: "Tests", content: tests },
-          {
-            title: "Questions",
-            content: generateQuestionsContent({ contact, github, email }),
-          },
-          {
-            title: "License",
-            content: validateLicense(license, sublicense, generateLink),
-          },
-        ].filter(({ _, content }) => content)
-      ),
-      0,
+    [
       {
         content: validateLicense(license, sublicense, generateLicenseBadge),
-      }
-    ),
+      },
+      ...insertTableOfContents([
+        {
+          title: "Description",
+          content: validate(description, () =>
+            generateList(motivation, reason, problem, lesson)
+          ),
+        },
+        { title: "Installation", content: installation },
+        { title: "Contribution", content: contribution },
+        { title: "Tests", content: tests },
+        {
+          title: "Questions",
+          content: generateQuestionsContent({ contact, github, email }),
+        },
+        {
+          title: "License",
+          content: validateLicense(license, sublicense, generateLink),
+        },
+      ]),
+    ].filter(({ content }) => content),
     generateSection,
     `# ${title}\n\n`
   );
