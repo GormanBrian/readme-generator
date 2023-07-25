@@ -6,7 +6,7 @@ import { insert } from "./common.js";
 /**
  * Returns callback or undefined
  * @param {boolean} isValid Valid condition
- * @param {Function} callback Callback function
+ * @param {function} callback Callback function
  * @returns {( | undefined)} Callback return or undefined
  */
 const validate = (isValid, callback) => (isValid ? callback() : undefined);
@@ -151,7 +151,6 @@ const generateQuestionsContent = ({ contact, github, email }) =>
  * @param {string} answers.title README title
  * @param {string} answers.description Repository description
  * @param {string} answers.motivation Description motivation
- * @param {string} answers.reason Description reason
  * @param {string} answers.problem Description problem
  * @param {string} answers.lesson Description lesson
  * @param {string} answers.installation Installation instructions
@@ -168,7 +167,6 @@ const generateMarkdown = ({
   title,
   description,
   motivation,
-  reason,
   problem,
   lesson,
   installation,
@@ -189,7 +187,7 @@ const generateMarkdown = ({
         {
           title: "Description",
           content: validate(description, () =>
-            generateList(motivation, reason, problem, lesson)
+            generateList(motivation, problem, lesson)
           ),
         },
         { title: "Installation", content: installation },

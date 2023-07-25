@@ -1,31 +1,32 @@
 # readme-generator
 
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+
 ## Description
 
-Description
+- I wanted to create high quality READMEs without repeating myself
+- Creating a README for every repository is repetitive
+- I learned how to work with NodeJS modules and manipulate markdown content
 
 ## Table of Contents
 
 - [Installation](#installation)
-- [License](#license)
+- [Contribution](#contribution)
 - [Tests](#tests)
 - [Questions](#questions)
+- [License](#license)
 
 ## Installation
 
-npm init
-
-## License
-
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-## Tests
-
-echo "Error: no test specified" && exit 1
+npm i
 
 ## Questions
 
 Email me with questions or create a pull request.
 
-- [GitHub](gormanbrian)
-- [test@test.com](mailto:test@test.com)
+- [GitHub](https://github.com/gormanbrian)
+- [briangorman99@gmail.com](mailto:briangorman99@gmail.com)
+
+## License
+
+[ISC License (ISC)](https://opensource.org/licenses/ISC)

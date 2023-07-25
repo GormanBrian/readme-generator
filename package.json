@@ -2,6 +2,7 @@
   "name": "readme-generator",
   "version": "1.0.0",
   "url": "https://github.com/GormanBrian/readme-generator",
+  "email": "briangorman99@gmail.com",
   "description": "",
   "main": "index.js",
   "type": "module",

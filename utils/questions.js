@@ -50,12 +50,6 @@ const questions = [
   },
   {
     type: "input",
-    name: "reason",
-    message: "Why did you build this project?",
-    when: ({ description }) => description,
-  },
-  {
-    type: "input",
     name: "problem",
     message: "What problem does it solve?",
     when: ({ description }) => description,
@@ -77,6 +71,7 @@ const questions = [
     type: "input",
     name: "usage",
     message: "Enter the usage instructions:",
+    default: "node index.js",
   },
   {
     type: "list",
