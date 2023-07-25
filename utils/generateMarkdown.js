@@ -1,33 +1,7 @@
 import { getLicenseData } from "./licenses.js";
 import { insert } from "./common.js";
 
-/**
- * Generates an unordered markdown list
- * @param  {...string} items List items
- * @returns {string} Markdown list
- */
-const generateList = (...items) =>
-  reduceContent(items, (item) => (item ? `- ${item}` : ""));
-
-/**
- * Generates a markdown license badge
- * @param {Object} license License data object
- * @param {string} license.slug License name to be displayed on the image
- * @param {string} license.badge Link to the license badge image
- * @param {string} license.link Link to the license
- * @returns {string} Markdown license badge
- */
-const generateLicenseBadge = ({ slug, badge, link }) =>
-  `[![License${slug ? ": " + slug : ""}](${badge})](${link})`;
-
-/**
- * Generates a markdown link
- * @param {Object} data Link data object
- * @param {string} data.name Link name
- * @param {string} data.link Link address
- * @returns {string} Markdown link
- */
-const generateLink = ({ name, link }) => `[${name}](${link})`;
+/** =================================== Validate =================================== */
 
 /**
  * Returns callback or undefined
@@ -49,70 +23,7 @@ const validateLicense = (license, sublicense, callback) =>
     callback(getLicenseData(license, sublicense))
   );
 
-/**
- * Generates a README markdown questions section
- * @param {Object} contactInfo Contact information
- * @param {string} contactInfo.contact Contact instructions
- * @param {string} contactInfo.github Github address
- * @param {string} contactInfo.email Email address
- * @returns {string} README markdown questions section
- */
-const generateQuestionsContent = ({ contact, github, email }) =>
-  reduceContent(
-    [
-      { name: "GitHub", value: "https://github.com/" + github },
-      { name: email, value: `mailto:${email}` },
-    ],
-    ({ name, value }) => `- [${name}](${value})`,
-    `${contact}\n\n`
-  );
-
-/**
- * @typedef {Object} Section Section data
- * @property {string} title Section title
- * @property {number} content Section content
- */
-
-/**
- * Generates a formatted README markdown section
- * @param {Section} section Section data
- * @returns Markdown section title and content
- */
-const generateSection = ({ title, content }) =>
-  !content
-    ? null
-    : !title
-    ? `${content}\n`
-    : `## ${title}
-
-${content}
-`;
-
-/**
- * Generates table of contents from a list of titles
- * @param {Array<string>} titles Section titles
- * @returns {Object} Table of Contents section data
- */
-const generateTableOfContents = (titles) =>
-  reduceContent(
-    titles,
-    (t) => `- [${t}](#${t.toLowerCase().split(" ").join("-")})`
-  );
-
-/**
- * Creates and inserts the table of contents into the sections array
- * @param {Array<Section>} sections Array of section data
- * @param {string} insertAfter Title of the section that will precede the table of contents
- * @returns {Array<Section>} Sections with table of contents inserted
- */
-const insertTableOfContents = (sections, insertAfter = "Description") => {
-  let sectionTitles = sections.map((s) => s.title);
-  let index = sectionTitles.indexOf(insertAfter) + 1;
-  return insert(sections, index, {
-    title: "Table of Contents",
-    content: generateTableOfContents(sectionTitles.splice(index)),
-  });
-};
+/** ==================================== Helper ==================================== */
 
 /**
  * @callback generateContent Generates markdown content
@@ -142,10 +53,109 @@ const reduceContent = (
   }, intialValue);
 
 /**
+ * Creates and inserts the table of contents into the sections array
+ * @param {Array<Section>} sections Array of section data
+ * @param {string} insertAfter Title of the section that will precede the table of contents
+ * @returns {Array<Section>} Sections with table of contents inserted
+ */
+const insertTableOfContents = (sections, insertAfter = "Description") => {
+  let sectionTitles = sections.map((s) => s.title);
+  let index = sectionTitles.indexOf(insertAfter) + 1;
+  return insert(sections, index, {
+    title: "Table of Contents",
+    content: generateTableOfContents(sectionTitles.splice(index)),
+  });
+};
+
+/** =================================== Generate =================================== */
+
+/**
+ * Generates an unordered markdown list
+ * @param  {...string} items List items
+ * @returns {string} Markdown list
+ */
+const generateList = (...items) =>
+  reduceContent(items, (item) => (item ? `- ${item}` : ""));
+
+/**
+ * Generates a markdown link
+ * @param {Object} data Link data object
+ * @param {string} data.name Link name
+ * @param {string} data.link Link address
+ * @returns {string} Markdown link
+ */
+const generateLink = ({ name, link }) => `[${name}](${link})`;
+
+/**
+ * Generates table of contents from a list of titles
+ * @param {Array<string>} titles Section titles
+ * @returns {Object} Table of Contents section data
+ */
+const generateTableOfContents = (titles) =>
+  reduceContent(
+    titles,
+    (t) => `- [${t}](#${t.toLowerCase().split(" ").join("-")})`
+  );
+
+/**
+ * @typedef {Object} Section Section data
+ * @property {string} title Section title
+ * @property {number} content Section content
+ */
+
+/**
+ * Generates a formatted README markdown section
+ * @param {Section} section Section data
+ * @returns Markdown section title and content
+ */
+const generateSection = ({ title, content }) =>
+  !content
+    ? null
+    : !title
+    ? `${content}\n`
+    : `## ${title}
+
+${content}
+`;
+
+/**
+ * Generates a markdown license badge
+ * @param {Object} license License data object
+ * @param {string} license.slug License name to be displayed on the image
+ * @param {string} license.badge Link to the license badge image
+ * @param {string} license.link Link to the license
+ * @returns {string} Markdown license badge
+ */
+const generateLicenseBadge = ({ slug, badge, link }) =>
+  `[![License${slug ? ": " + slug : ""}](${badge})](${link})`;
+
+/**
+ * Generates a README markdown questions section
+ * @param {Object} contactInfo Contact information
+ * @param {string} contactInfo.contact Contact instructions
+ * @param {string} contactInfo.github Github address
+ * @param {string} contactInfo.email Email address
+ * @returns {string} README markdown questions section
+ */
+const generateQuestionsContent = ({ contact, github, email }) =>
+  reduceContent(
+    [
+      { name: "GitHub", value: "https://github.com/" + github },
+      { name: email, value: `mailto:${email}` },
+    ],
+    ({ name, value }) => `- [${name}](${value})`,
+    `${contact}\n\n`
+  );
+
+/**
  * Generates README markdown content
  * @param {Object} answers Inquirer answers
  * @param {string} answers.title README title
  * @param {string} answers.description Repository description
+ * @param {string} answers.motivation Description motivation
+ * @param {string} answers.reason Description reason
+ * @param {string} answers.problem Description problem
+ * @param {string} answers.lesson Description lesson
  * @param {string} answers.installation Installation instructions
  * @param {string} answers.license License name
  * @param {string} answers.sublicense Sublicense name
