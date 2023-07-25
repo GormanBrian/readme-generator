@@ -1,10 +1,10 @@
 # readme-generator
 
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
 
-test
+This creates readmes
 
 ## Table of Contents
 
@@ -30,4 +30,4 @@ Email me with questions or create a pull request.
 
 ## License
 
-[BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)
+[MIT](https://opensource.org/licenses/MIT)

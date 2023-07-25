@@ -2,6 +2,14 @@ import { getLicenseData } from "./licenses.js";
 import { insert } from "./common.js";
 
 /**
+ * Generates an unordered markdown list
+ * @param  {...string} items List items
+ * @returns {string} Markdown list
+ */
+const generateList = (...items) =>
+  reduceContent(items, (item) => (item ? `- ${item}` : ""));
+
+/**
  * Generates a markdown license badge
  * @param {Object} license License data object
  * @param {string} license.slug License name to be displayed on the image
@@ -13,13 +21,21 @@ const generateLicenseBadge = ({ slug, badge, link }) =>
   `[![License${slug ? ": " + slug : ""}](${badge})](${link})`;
 
 /**
- * Generates a markdown license link
- * @param {Object} license License data object
- * @param {string} license.name License name
- * @param {string} license.link Link to the license
- * @returns
+ * Generates a markdown link
+ * @param {Object} data Link data object
+ * @param {string} data.name Link name
+ * @param {string} data.link Link address
+ * @returns {string} Markdown link
  */
-const generateLicenseLink = ({ name, link }) => `[${name}](${link})`;
+const generateLink = ({ name, link }) => `[${name}](${link})`;
+
+/**
+ * Returns callback or undefined
+ * @param {boolean} isValid Valid condition
+ * @param {Function} callback Callback function
+ * @returns {( | undefined)} Callback return or undefined
+ */
+const validate = (isValid, callback) => (isValid ? callback() : undefined);
 
 /**
  * Generates markdown if license exists
@@ -29,9 +45,9 @@ const generateLicenseLink = ({ name, link }) => `[${name}](${link})`;
  * @returns {(string | undefined)} Generated markdown string or undefined
  */
 const validateLicense = (license, sublicense, callback) =>
-  license !== "none"
-    ? callback(getLicenseData(license, sublicense))
-    : undefined;
+  validate(license !== "none", () =>
+    callback(getLicenseData(license, sublicense))
+  );
 
 /**
  * Generates a README markdown questions section
@@ -143,6 +159,10 @@ const reduceContent = (
 const generateMarkdown = ({
   title,
   description,
+  motivation,
+  reason,
+  problem,
+  lesson,
   installation,
   license,
   sublicense,
@@ -156,7 +176,12 @@ const generateMarkdown = ({
     insert(
       insertTableOfContents(
         [
-          { title: "Description", content: description },
+          {
+            title: "Description",
+            content: validate(description, () =>
+              generateList(motivation, reason, problem, lesson)
+            ),
+          },
           { title: "Installation", content: installation },
           { title: "Contribution", content: contribution },
           { title: "Tests", content: tests },
@@ -166,7 +191,7 @@ const generateMarkdown = ({
           },
           {
             title: "License",
-            content: validateLicense(license, sublicense, generateLicenseLink),
+            content: validateLicense(license, sublicense, generateLink),
           },
         ].filter(({ _, content }) => content)
       ),

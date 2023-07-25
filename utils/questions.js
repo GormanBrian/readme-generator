@@ -24,18 +24,7 @@ const validateGithubProfile = (link) => {
 };
 
 /**
- * 1. Title
- * 2. Description
- * 3. Installation
- * 4. Usage
- * 5. License
- * 6. Sublicense
- * 7. Can Contribute
- * 8. Contributing
- * 9. Tests
- * 10. GitHub
- * 11. Email
- * 12. Questions
+ * Inquirer questions
  */
 const questions = [
   {
@@ -48,10 +37,36 @@ const questions = [
         : path.basename(path.resolve()),
   },
   {
-    type: "input",
+    type: "confirm",
     name: "description",
-    message: "Enter a description:",
+    message: "Enter a description?",
   },
+  //
+  {
+    type: "input",
+    name: "motivation",
+    message: "What was your motivation?",
+    when: ({ description }) => description,
+  },
+  {
+    type: "input",
+    name: "reason",
+    message: "Why did you build this project?",
+    when: ({ description }) => description,
+  },
+  {
+    type: "input",
+    name: "problem",
+    message: "What problem does it solve?",
+    when: ({ description }) => description,
+  },
+  {
+    type: "input",
+    name: "lesson",
+    message: "What did you learn?",
+    when: ({ description }) => description,
+  },
+  //
   {
     type: "input",
     name: "installation",
