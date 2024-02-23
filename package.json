@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "url": "https://github.com/GormanBrian/readme-generator",
   "email": "briangorman99@gmail.com",
-  "description": "",
+  "description": "Generates high quality READMEs quickly",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "author": "",
+  "author": "Brian Gorman",
   "license": "ISC",
   "dependencies": {
     "email-validator": "^2.0.4",

@@ -4,21 +4,41 @@
 
 ## Description
 
-- I wanted to create high quality READMEs without repeating myself
-- Creating a README for every repository is repetitive
-- I learned how to work with NodeJS modules and manipulate markdown content
+- I wanted to create high quality READMEs without repeating myself.
+- Creating a README for every repository is repetitive.
+- I learned how to work with NodeJS modules and manipulate markdown content.
 
 ## Table of Contents
 
 - [Installation](#installation)
-- [Contribution](#contribution)
-- [Tests](#tests)
 - [Questions](#questions)
 - [License](#license)
 
 ## Installation
 
-npm i
+1. Clone the repository:
+
+```bash
+git clone git@github.com:GormanBrian/readme-generator.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd readme-generator
+```
+
+3. Install the required dependencies:
+
+```bash
+npm install
+```
+
+4. Start the program in the terminal:
+
+```bash
+npm start
+```
 
 ## Questions
 
